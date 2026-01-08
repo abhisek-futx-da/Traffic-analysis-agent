@@ -6,7 +6,7 @@ import requests
 import json
 
 # OpenRouter API configuration
-API_KEY = "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"
+API_KEY = "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"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "tngtech/deepseek-r1t2-chimera:free"
 
@@ -287,7 +287,8 @@ Be thorough but concise, ensuring each sentence adds meaningful value to the ana
         summary = call_openrouter(prompt, is_summary=True)
         
         if summary:
-            return summary
+            formatted_summary = summary.replace("**", "")
+            return formatted_summary
         else:
             return None
             
@@ -366,36 +367,10 @@ def calculate_table(ws, table_info):
     else:
         ws.cell(total_row, 6).value = None
     
-    # Calculate % Change row if it exists
+    # Skip updating the '% Change' row in the Excel file if it exists.
+    # This allows the workbook to keep its original formulas/values for that row.
     if percent_change_row:
-        ws.cell(percent_change_row, 5).value = None
-        
-        # Also calculate % Change for 2024 vs 2023 if available
-        total_2023_cell = ws.cell(total_row, 3)
-        if total_2023_cell.value and isinstance(total_2023_cell.value, str) and total_2023_cell.value.startswith('='):
-            total_2023_values = []
-            for row in range(data_start, data_end + 1):
-                val = safe_float(ws.cell(row, 3).value)
-                if val is not None:
-                    total_2023_values.append(val)
-            total_2023 = sum(total_2023_values) if total_2023_values else None
-        else:
-            total_2023 = safe_float(total_2023_cell.value)
-        
-        # Calculate full 2024 total for percent change (use all 2024 data rows, not just aligned with 2025)
-        values_2024_all = []
-        for row in range(data_start, data_end + 1):
-            v_2024 = safe_float(ws.cell(row, 4).value)  # Column D (2024)
-            if v_2024 is not None:
-                values_2024_all.append(v_2024)
-        total_2024_full = calculate_with_openrouter("total", values_2024_all) if values_2024_all else None
-        
-        if total_2023 is not None and total_2024_full is not None:
-            percent_change_2023_2024 = calculate_with_openrouter("percent_change", [total_2024_full, total_2023])
-            if percent_change_2023_2024 is not None:
-                cell = ws.cell(percent_change_row, 4)
-                cell.value = round(percent_change_2023_2024 / 100, 4)
-                cell.number_format = '0.00%'
+        pass
     
     print(f"  ✓ Calculations completed for: {title}")
 
