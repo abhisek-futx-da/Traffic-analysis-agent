@@ -6,7 +6,7 @@ import requests
 import json
 
 # OpenRouter API configuration
-API_KEY = "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"
+API_KEY = "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"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "tngtech/deepseek-r1t2-chimera:free"
 
