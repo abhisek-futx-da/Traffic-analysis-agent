@@ -12,7 +12,7 @@ from langgraph.graph import StateGraph, END
 from typing import TypedDict
 
 # OpenRouter API configuration
-API_KEY = "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"
+API_KEY = "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"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "tngtech/deepseek-r1t2-chimera:free"
 

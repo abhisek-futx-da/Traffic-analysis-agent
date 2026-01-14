@@ -159,7 +159,7 @@ app.layout = html.Div([
     # Header
     html.Div([
         html.H1("Traffic Insight Dashboard", 
-                style={'color': colors['text'], 'margin': '0', 'fontSize': '2.5rem'}),
+            style={'color': colors['text'], 'margin': '0', 'fontSize': '2.5rem'}),
         html.P("Interactive Analytics & AI-Powered Insights",
                style={'color': colors['text'], 'opacity': 0.7, 'margin': '10px 0 0 0'})
     ], style={'textAlign': 'center', 'padding': '20px', 'backgroundColor': colors['card'],
